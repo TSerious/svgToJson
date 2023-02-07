@@ -18,9 +18,13 @@ To use a npm package in html you have to
   <pre>const svgson = require('svgson');
 module.exports=svgson</pre>
   </li>
-  <li> Output the module exported to a js file that you can use in the html. To do this run <code>node_modules/.bin/browserify index.js -s <name of module> > <name of output JavaScript file></code>. For this tool the command looks like this:
+  <li> Output the module exported to a js file that you can use in the html. To do this run:
+  <pre>node_modules/.bin/browserify index.js -s [name of module] > [name of output JavaScript file]</pre>
+  Replace <code>[name of module]</code> with the name of the exported module and replace <code>[name of output JavaScript file]</code> with the name of the js file that will be created, For this tool the command looks like this:
   <pre>node_modules/.bin/browserify index.js -s svgson > svgson.js</pre>
   </li>
   <li> Include the created js file in your html. For example: <code><script type="text/javascript" src="svgson.js"></script></code>
+  </li>
+  <li> Inside a script in html you you can use the exported module. For example: <code>svgson.parse()</code>
   </li>
 </ol>

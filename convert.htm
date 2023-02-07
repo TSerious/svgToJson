@@ -1,0 +1,48 @@
+<html>
+    <head>
+		<script type="text/javascript" src="svgson.js"></script>
+    </head>
+    <body>
+		<p>Select a file to convert it to json.</p>
+		<input type="file" id="sourcefile" accept="image/svg" text="huhu">
+    </body>
+	<script type = "text/javascript">
+		const input = document.getElementById("sourcefile");
+				
+		input.addEventListener("change", function() {
+			var file = input.files[0];
+			
+			console.log(file);
+			
+			var reader = new FileReader();
+			reader.addEventListener("load", function() {
+				console.log("file opened and read");
+				svgson.parse(reader.result)
+				.then((json) => {
+					storeAsJson(JSON.stringify(json, null, 2), file.name.replace(".svg",".json"));
+				})
+				.catch(() => { console.log("couldn't parse"); });
+			});
+			reader.readAsText(file);
+		});
+		
+		function storeAsJson(content, fileName) {
+			console.log("storing as json");
+		
+			var blob = new Blob([content], { type: "text/plain" });
+			var url = URL.createObjectURL(blob);
+			var a = document.createElement("a");
+			a.style.display = "none";
+			a.href = url;
+			a.download = fileName;
+			document.body.appendChild(a);
+			a.click();
+			setTimeout(function() {
+				document.body.removeChild(a);
+				window.URL.revokeObjectURL(url);
+			}, 0);
+			
+			input.value = null;
+		}
+	</script>
+</html>
